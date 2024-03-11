@@ -1,19 +1,39 @@
 document.addEventListener("DOMContentLoaded", function() {
-    let currentPage = 1;
-    const pages = document.querySelectorAll('.page');
-  
-    function showPage(pageNumber) {
-      pages.forEach(page => page.classList.remove('active'));
-      document.getElementById(`page${pageNumber}`).classList.add('active');
+  let currentPage = 1;
+  const pages = document.querySelectorAll('.page');
+
+  function showPage(pageNumber) {
+    pages.forEach(page => page.style.display = 'none');
+    document.getElementById(`page${pageNumber}`).style.display = 'block';
+  }
+
+  function nextPage() {
+    if (currentPage < pages.length) {
+      currentPage++;
+      showPage(currentPage);
     }
-  
-    document.addEventListener('keydown', function(event) {
-      if (event.keyCode === 37) { // Flecha izquierda
-        currentPage = (currentPage === 1) ? 4 : currentPage - 1;
-        showPage(currentPage);
-      } else if (event.keyCode === 39) { // Flecha derecha
-        currentPage = (currentPage === 4) ? 1 : currentPage + 1;
-        showPage(currentPage);
-      }
-    });
+  }
+
+  function previousPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      showPage(currentPage);
+    }
+  }
+
+  function handleSideTouchOrClick(event) {
+    const screenWidth = window.innerWidth;
+    const touchX = event.type === "touchstart" ? event.touches[0].clientX : event.clientX;
+
+    if (touchX > screenWidth / 2) {
+      nextPage();
+    } else {
+      previousPage();
+    }
+  }
+
+  document.addEventListener("touchstart", handleSideTouchOrClick);
+  document.addEventListener("click", handleSideTouchOrClick);
+
+  showPage(currentPage); // Mostrar la primera página al cargar la página
   });

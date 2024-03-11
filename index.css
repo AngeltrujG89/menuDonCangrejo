@@ -36,13 +36,11 @@ body, html {
   }
   
   .page {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 20px; /* Margen superior */
-    margin-bottom: 20px; /* Margen inferior */
+    display: none; /* Ocultar todas las páginas inicialmente */
+  }
+  
+  .page:first-child {
+    display: block; /* Mostrar solo la primera página */
   }
   
   .page > div {
